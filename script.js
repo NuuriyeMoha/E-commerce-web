@@ -262,12 +262,31 @@ if (contactForm) {
   });
 }
 
-// ---------- DARK MODE ----------
+// ---------- DARK MODE (with dynamic text "Light"/"Dark") ----------
 const darkToggle = document.getElementById("darkModeToggle");
-if (localStorage.getItem("theme") === "dark") document.body.classList.add("dark");
+
+// Function to update the button text and icon based on current theme
+function updateDarkModeButton() {
+  const isDark = document.body.classList.contains("dark");
+  if (isDark) {
+    darkToggle.innerHTML = '<i class="fas fa-sun"></i> Light';
+  } else {
+    darkToggle.innerHTML = '<i class="fas fa-moon"></i> Dark';
+  }
+}
+
+// Set initial theme from localStorage
+if (localStorage.getItem("theme") === "dark") {
+  document.body.classList.add("dark");
+}
+updateDarkModeButton();
+
+// Toggle theme on click
 darkToggle.addEventListener("click", () => {
   document.body.classList.toggle("dark");
-  localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
+  const isDarkNow = document.body.classList.contains("dark");
+  localStorage.setItem("theme", isDarkNow ? "dark" : "light");
+  updateDarkModeButton();
 });
 
 // ---------- HAMBURGER MENU ----------
